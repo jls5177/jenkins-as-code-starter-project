@@ -20,11 +20,17 @@ dependencies {
             {
                 exclude module: 'groovy-all'
             }
+
+    // Add Automation repo for simplified REST API
     compile 'com.github.jls5177:jenkins-automation:-SNAPSHOT'
 
+    // Add HTTPBuilder-ng for RESTful APIs with Digest authentication
+    compile 'io.github.http-builder-ng:http-builder-ng-apache:0.13.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
+    gradleVersion = '3.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -37,7 +43,8 @@ task rest(type: JavaExec) {
 sourceSets {
     main {
         groovy {
-            srcDirs = ['src/main/groovy', 'jobs'  ]
+            srcDirs = ['src/main/groovy', 'jobs']
+            compileClasspath += main.compileClasspath
         }
     }
 }
